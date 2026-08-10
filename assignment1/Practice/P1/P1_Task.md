@@ -1,4 +1,4 @@
-# please on github,view this file in code mode not in preview mode. 
+# please on github,view this file in code mode.Not in preview mode. 
 # P1 Task
 
 ## Routes
