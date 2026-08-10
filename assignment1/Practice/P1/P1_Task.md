@@ -11,5 +11,5 @@
   /contact     app/contact/page.tsx
 
 ## Deeper
-## Route groups (e.g. (marketing)) are ignored in URLs and used only for code organization.
+## Route groups (e.g. (marketing)) are ignored in URLs and used only for code organization.jsut for facilitating the developer that what folder shows what kind of code.
 
