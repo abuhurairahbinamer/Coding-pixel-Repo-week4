@@ -10,7 +10,7 @@ export default function ErrorButton() {
   }
   
   return (
-    <button onClick={() => setShouldError(true)}>
+    <button className='p-3 bg-red-600 hover:bg-red-600/80 cursor-pointer rounded-2xl' onClick={() => setShouldError(true)}>
       Force Error
     </button>
   )
