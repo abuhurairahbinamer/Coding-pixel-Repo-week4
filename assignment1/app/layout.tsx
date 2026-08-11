@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google"; 
 import "./globals.css";
 import Navbar from '../components/Navbar'
+import ErrorButton from "@/components/ErrorButton";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Navbar/>
+        <ErrorButton message="P5 task Deeper ( Force error in layout.tsx)"/>
          <main className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans">
           {children}
         </main>
