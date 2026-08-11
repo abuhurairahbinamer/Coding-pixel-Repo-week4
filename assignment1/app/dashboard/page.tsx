@@ -2,7 +2,7 @@ import ErrorButton from './ErrorButton'
 
 
 async function getData() {
-  await new Promise((resolve) => setTimeout(resolve, 2000)) // simulate loading
+  await new Promise((resolve) => setTimeout(resolve, 2000)) // P4 Task deeper
 
   return 'Dashboard Data Loaded'
 }
