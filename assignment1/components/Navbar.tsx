@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useRef } from 'react'
-import { isActive } from '@/practice/p6/p6';
+import { isActive } from '@/app/practice_questions/p6/p6';
 import { usePathname } from 'next/navigation';
 export default function Navbar() {
   const pathname = usePathname();
