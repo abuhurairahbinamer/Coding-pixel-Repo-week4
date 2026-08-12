@@ -62,7 +62,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Technology | Version |
 |---|---|
@@ -76,6 +76,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ##  Data Source
 
 Country data is fetched from the [REST Countries API](https://restcountries.conventus.de/v3.1).
+
+| Endpoint | Used For |
+|---|---|
+| `GET /v3.1/all?fields=name,capital,population,region,flags,cca3` | Fetching all countries for the list page |
+| `GET /v3.1/alpha/{code}?fields=name,capital,population,region,flags,cca3,languages,borders` | Fetching a single country for the detail page |
 
 ---
 
