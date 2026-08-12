@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCountry } from "../../../lib/api";
-import { borderLinks } from "@/app/practice_questions/p2/p2_Task";
+import { borderLinks } from "@/practice_questions/p2/p2_Task";
 type Props = {
   params: Promise<{
     code: string;
