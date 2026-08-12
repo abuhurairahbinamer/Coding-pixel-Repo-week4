@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getCountry } from "../../../lib/api";
-
+import { borderLinks } from "@/app/practice_questions/p2/p2_Task";
 type Props = {
   params: Promise<{
     code: string;
@@ -17,7 +17,7 @@ export default async function CountryPage({
   if (!country) {
     notFound();
   }
-
+  const borders=borderLinks(country.borders);
   const capital = country.capital?.[0] ?? "N/A";
 
   const languages = country.languages
@@ -80,16 +80,16 @@ export default async function CountryPage({
           Border Countries
         </h2>
 
-        {country.borders &&
-        country.borders.length > 0 ? (
+        {borders &&
+        borders.length > 0 ? (
           <div className="flex flex-wrap gap-3">
-            {country.borders.map((border) => (
+            {borders.map((border) => (
               <Link
-                key={border}
-                href={`/country/${border}`}
+                key={border.code}
+                href={border.href}
                 className="rounded border bg-white px-4 py-2 hover:bg-gray-100"
               >
-                {border}
+                {border.code}
               </Link>
             ))}
           </div>
