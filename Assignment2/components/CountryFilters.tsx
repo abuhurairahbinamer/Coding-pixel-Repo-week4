@@ -79,7 +79,7 @@ export default function CountryFilters({ countries }: Props) {
               className="rounded-lg border bg-white p-4 shadow-sm transition hover:shadow-md"
             >
               <img
-                src={country.flags.png}
+                src={country.flags.svg}
                 alt={
                   country.flags.alt ??
                   country.name.common

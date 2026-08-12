@@ -36,7 +36,7 @@ export default async function CountryPage({
       <div className="grid gap-8 rounded-xl border bg-white p-6 shadow-sm md:grid-cols-2">
         <div>
           <img
-            src={country.flags.png}
+            src={country.flags.svg}
             alt={
               country.flags.alt ??
               country.name.common
