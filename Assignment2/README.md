@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+#  Country Explorer — Next.js Edition
 
-## Getting Started
+> **Week 4 — Assignment 2**
+> The Week 3 Country Explorer rebuilt in **Next.js (App Router) + TypeScript + Tailwind CSS**, now with a real detail page for every country, server-side data fetching, and clean separation between Server and Client Components.
 
-First, run the development server:
+---
+
+##  Assignment Features
+
+- **Two routes**: `/` (country list) and `/country/[code]` (country detail by `cca3` code)
+- **Root `layout.tsx`** with shared navigation on every page
+- **List page is a Server Component** — data is fetched on the server before the page is sent (no client-side fetch on initial load)
+- **Detail page** displays name, capital, population, region, languages, and border countries as `<Link>`s to their own detail pages
+- **`loading.tsx` and `error.tsx`** for the detail route
+- **Search & region filter is a Client Component** (`'use client'`) — everything else stays a Server Component
+- **Non-existent country codes** are handled gracefully via `not-found.tsx`
+
+---
+
+##  Project Structure
+
+```
+app/
+├── layout.tsx                  # Root layout with shared nav
+├── page.tsx                    # Home — Server Component, fetches all countries
+├── error.tsx                   # Root-level error boundary (Client Component)
+├── globals.css
+└── country/
+    └── [code]/
+        ├── page.tsx            # Country detail — Server Component
+        ├── loading.tsx         # Loading UI shown on navigation
+        ├── error.tsx           # Error boundary (Client Component)
+        └── not-found.tsx       # Shown when country code is invalid
+
+components/
+└── CountryFilters.tsx          # Search + region filter — Client Component ('use client')
+
+lib/
+└── api.ts                      # Server-side fetch helpers (getCountries, getCountry)
+
+types/
+└── country.ts                  # TypeScript types for Country and CountryDetail
+```
+
+---
+
+##  Getting Started
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+| Technology | Version |
+|---|---|
+| [Next.js](https://nextjs.org) | 16 (App Router) |
+| [React](https://react.dev) | 19 |
+| [TypeScript](https://www.typescriptlang.org) | 5 |
+| [Tailwind CSS](https://tailwindcss.com) | 4 |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+##  Data Source
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Country data is fetched from the [REST Countries API](https://restcountries.conventus.de/v3.1).
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+##  Acceptance Criteria
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [x] Two or more routes including the dynamic `[code]`; shared layout/nav on all pages
+- [x] List data fetched in a Server Component (no `'use client'` on it; no list network call in the browser on first load)
+- [x] Search/filter is `'use client'`; the rest are not needlessly client
+- [x] `loading.tsx` shows on navigation; breaking the fetch triggers `error.tsx`
+- [x] Border links navigate via `<Link>`; a bad `[code]` is handled gracefully
