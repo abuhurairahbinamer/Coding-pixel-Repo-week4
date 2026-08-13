@@ -1,22 +1,18 @@
 import type { Country, CountryDetail } from "../types/country";
-
+import {cache} from 'react'
 const API_URL = "https://restcountries.conventus.de/v3.1";
-
-export async function getCountries(): Promise<Country[]> {
-  const response = await fetch(
-    `${API_URL}/all?fields=name,capital,population,region,flags,cca3`,
-    {
-      cache: "no-store",
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch countries");
-  }
-
-  return response.json();
-}
-
+ 
+export const getCountries = cache(async () => { 
+  const response = await fetch( 
+    `${API_URL}/all?fields=name,capital,population,region,flags,cca3,languages,borders` 
+  ); 
+ 
+  if (!response.ok) { 
+    throw new Error("Failed to fetch countries"); 
+  } 
+ 
+  return response.json(); 
+})
 export async function getCountry(
   code: string
 ): Promise<CountryDetail | null> {

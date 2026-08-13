@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getCountry } from "../../../lib/api";
+import { getCountries} from "../../../lib/api";
 import { borderLinks } from "@/practice_questions/p2/p2_Task";
+import { getByCode } from "@/practice_questions/p4/p4";
 type Props = {
   params: Promise<{
     code: string;
@@ -12,8 +13,8 @@ export default async function CountryPage({
   params,
 }: Props) {
   const { code } = await params;
-  const country = await getCountry(code);
-  
+  const countries = await getCountries();
+  const country=getByCode(countries,code)
   if (!country) {
     notFound();
   }
