@@ -12,6 +12,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("P8 task done with deeper")
   return (
     <html lang="en">
       <body className="bg-gray-50 text-gray-900">
