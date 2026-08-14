@@ -13,6 +13,9 @@ export default async function CountryPage({
   params,
 }: Props) {
   const { code } = await params;
+ if (!/^[A-Za-z]{3}$/.test(code)) {
+  notFound();
+}
   const countries = await getCountries();
   const country=getByCode(countries,code)
   if (!country) {
