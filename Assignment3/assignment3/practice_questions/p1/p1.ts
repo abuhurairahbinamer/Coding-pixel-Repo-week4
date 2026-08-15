@@ -3,7 +3,10 @@ import { z } from "zod";
 export const schema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
-  age: z.number().int().min(18),
+  age: z.coerce          // deeper p6 task
+    .number()
+    .int("Age must be an integer")
+    .min(18, "Age must be 18 or above"),
 });
 
 const result1 = schema.safeParse({

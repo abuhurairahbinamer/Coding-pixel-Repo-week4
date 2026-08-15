@@ -1,7 +1,7 @@
 "use server";
 
 import { schema } from "@/practice_questions/p1/p1";
-
+import { parseForm } from "@/practice_questions/p6/p6";
 export type FormState = {
   success: boolean;
   message?: string;
@@ -12,27 +12,24 @@ export type FormState = {
   };
 };
 
+
+
+
 export async function submitForm(formData: FormData): Promise<FormState> {
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const ageRaw = formData.get("age");
+  // const name = formData.get("name");
+  // const email = formData.get("email");
+  // const ageRaw = formData.get("age");
 
-  const ageNumber = ageRaw !== null && ageRaw !== "" ? Number(ageRaw) : undefined;
+  // const ageNumber = ageRaw !== null && ageRaw !== "" ? Number(ageRaw) : undefined;
+  const result = parseForm(formData);
 
-  const result = schema.safeParse({
-    name: typeof name === "string" ? name : "",
-    email: typeof email === "string" ? email : "",
-    age: ageNumber,
-  });
-
-  if (!result.success) {
-    const flattened = result.error.flatten().fieldErrors;
+  if (!result.ok) {
     return {
       success: false,
       errors: {
-        name: flattened.name,
-        email: flattened.email,
-        age: flattened.age,
+        name: result.errors.name,
+        email: result.errors.email,
+        age: result.errors.age,
       },
     };
   }
@@ -41,4 +38,6 @@ export async function submitForm(formData: FormData): Promise<FormState> {
     success: true,
     message: `Hello ${result.data.name}! Your submission has been validated successfully.`,
   };
+
+
 }
