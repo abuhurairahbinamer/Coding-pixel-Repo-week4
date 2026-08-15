@@ -1,26 +1,28 @@
 # CMIT Internship — Assignment 3: Route Handlers + Forms
 
-A Next.js (App Router) project demonstrating how to build API Route Handlers configured via environment variables and robust form handling using Server Actions and Zod schema validation.
+A Next.js (App Router) project demonstrating API Route Handlers configured via environment variables and robust form handling using Server Actions and Zod schema validation.
 
 ---
 
-##  Features
+## 🚀 Features
 
 1. **API Route Handler (`/api/config`)**
    - Implements a `GET` endpoint at [`app/api/config/route.ts`](./app/api/config/route.ts).
    - Reads environment configuration dynamically via `process.env.APP_NAME`.
    - Returns a structured JSON response without hard-coded configuration.
 
-2. **Server Actions with Zod Validation**
+2. **Server Actions with Zod Validation (Warm-Up P1 Schema)**
+   - Single source of truth schema defined in [`practice_questions/p1/p1.ts`](./practice_questions/p1/p1.ts):
+     - `name`: Non-empty string (`z.string().min(1)`)
+     - `email`: Valid email format (`z.string().email()`)
+     - `age`: Integer 18 or above (`z.number().int().min(18)`)
    - Implements server-side form submission in [`app/actions.ts`](./app/actions.ts).
-   - Validates form inputs against a **Zod** schema (minimum 3 characters).
-   - Returns explicit `{ success: boolean, error?: string, message?: string }` responses.
+   - Returns flattened field errors (`error.flatten().fieldErrors`) for granular per-field UI feedback.
 
-3. **Interactive Client Form**
-   - Responsive form component located at [`components/form/Form.tsx`](./components/form/Form.tsx).
-   - Provides clear visual feedback on submission:
-     -  **Validation Error**: Displays error message in red text on invalid input.
-     -  **Success Confirmation**: Displays greeting message in green text on valid input.
+3. **Interactive Client Form Component**
+   - Clean, accessible form component at [`components/form/Form.tsx`](./components/form/Form.tsx).
+   - Displays real-time per-field error messages in red under invalid inputs.
+   - Displays a success confirmation banner upon valid submission.
 
 4. **Secure Environment Management**
    - Variables documented in [`.env.example`](./.env.example).
@@ -28,7 +30,7 @@ A Next.js (App Router) project demonstrating how to build API Route Handlers con
 
 ---
 
-##  Tech Stack
+## 🛠️ Tech Stack
 
 - **Framework**: [Next.js](https://nextjs.org/) (App Router)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
@@ -37,7 +39,7 @@ A Next.js (App Router) project demonstrating how to build API Route Handlers con
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 assignment3/
@@ -46,12 +48,15 @@ assignment3/
 │   │   └── config/
 │   │       └── route.ts       # Route handler reading environment variable
 │   ├── actions.ts             # Server action with Zod validation
-│   ├── globals.css            # Global CSS & Tailwind styling
+│   ├── globals.css            # Global styling
 │   ├── layout.tsx             # Root layout component
 │   └── page.tsx               # Home page rendering the form
 ├── components/
 │   └── form/
-│       └── Form.tsx           # Client form with success/error handling
+│       └── Form.tsx           # Client form with per-field error & success handling
+├── practice_questions/
+│   └── p1/
+│       └── p1.ts              # Zod validation schema & test cases (Warm-up P1)
 ├── .env.example               # Example environment variable template
 ├── .gitignore                 # Git ignore configuration
 ├── package.json               # Dependencies and scripts
@@ -60,7 +65,7 @@ assignment3/
 
 ---
 
-##  Getting Started
+## 🏁 Getting Started
 
 ### 1. Prerequisites
 
@@ -102,7 +107,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to view the 
 
 ---
 
-##  Testing the Endpoints & Features
+## 🧪 Testing the Endpoints & Features
 
 ### 1. Test the API Route Handler
 
@@ -123,14 +128,18 @@ curl http://localhost:3000/api/config
 ### 2. Test the Form Validation
 
 1. Navigate to [http://localhost:3000](http://localhost:3000).
-2. **Invalid Test**: Enter a name shorter than 3 characters (e.g., `Jo`) and click **Submit**.
-   - Output: `Name must be at least 3 characters` displayed in red text.
-3. **Valid Test**: Enter a valid name (e.g., `Alice`) and click **Submit**.
-   - Output: `Hello Alice!` displayed in green text.
+2. **Invalid Test**:
+   - Leave `Name` empty, enter `x` for `Email`, and `10` for `Age`.
+   - Click **Submit**.
+   - Output: Each field displays its specific validation error in red.
+3. **Valid Test**:
+   - Enter `Abu` for `Name`, `abu@gmail.com` for `Email`, and `21` for `Age`.
+   - Click **Submit**.
+   - Output: Success confirmation banner with greeting message.
 
 ---
 
-##  Build and Verification
+## 📜 Build and Verification
 
 To verify production readiness and TypeScript compliance:
 
