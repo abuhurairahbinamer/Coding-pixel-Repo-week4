@@ -28,7 +28,7 @@ export default function Form() {
     if (result.success) {
       setFormResult({ status: "success" });
       setSuccessMessage(result.message || "Form submitted successfully!");
-      form.reset();
+      form.reset();           // p8 task
     } else {
       setFormResult({
         status: "error",
@@ -54,7 +54,7 @@ export default function Form() {
             className="border border-gray-300 p-2.5 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
           {/* P1 task deeper */}
-          {fieldErrors?.name && (
+          {fieldErrors?.name && (                // p8 task
             <p className="text-red-500 text-sm mt-1">
               {fieldErrors.name[0]}
             </p>
@@ -74,7 +74,7 @@ export default function Form() {
             className="border border-gray-300 p-2.5 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
           {/* P1 task deeper */}
-          {fieldErrors?.email && (
+          {fieldErrors?.email && (              // p8 task
             <p className="text-red-500 text-sm mt-1">
               {fieldErrors.email[0]}
             </p>
@@ -94,7 +94,7 @@ export default function Form() {
             className="border border-gray-300 p-2.5 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
           {/* P1 task deeper */}
-          {fieldErrors?.age && (
+          {fieldErrors?.age && (                       // p8 task
             <p className="text-red-500 text-sm mt-1">
               {fieldErrors.age[0]}
             </p>
@@ -109,7 +109,7 @@ export default function Form() {
         >
           {formResult.status === "submitting" ? (
             <>
-              <svg
+              <svg                                  // p8 task
                 className="animate-spin h-5 w-5 text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -137,14 +137,14 @@ export default function Form() {
         </button>
 
         {/* P4 task Error Message */}
-        {formResult.status === "error" && (
+        {formResult.status === "error" && (            // p8 task
           <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
             {formResult.message}
           </div>
         )}
 
         {/* P4 task Success Confirmation */}
-        {formResult.status === "success" && (
+        {formResult.status === "success" && (                  // p8 task
           <div className="p-3 bg-green-50 border border-green-200 text-green-700 rounded-md text-sm">
             {successMessage}
           </div>
