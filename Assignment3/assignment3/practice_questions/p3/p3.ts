@@ -1,13 +1,4 @@
-// import { NextResponse } from "next/server";
-
-// export async function GET() {
-//   return NextResponse.json({
-//     appName: process.env.APP_NAME,
-//     message: "Environment variable loaded successfully",
-//   });
-// }
-
-
+//p2 task is applied in api/config/route.ts
 import { NextResponse } from "next/server";
 
 export async function GET() {
