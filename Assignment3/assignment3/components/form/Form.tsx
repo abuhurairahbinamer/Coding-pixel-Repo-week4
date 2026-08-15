@@ -2,16 +2,19 @@
 
 import { useState, useRef } from "react";
 import { submitForm, FormState } from "@/app/actions";
+import { Result } from "@/practice_questions/p4/p4";
 
 export default function Form() {
-  const [formState, setFormState] = useState<FormState | null>(null);
-  const [isPending, setIsPending] = useState(false);
+  // P4 task: Discriminated union state
+  const [formResult, setFormResult] = useState<Result>({ status: "idle" });
+  const [fieldErrors, setFieldErrors] = useState<FormState["errors"]>(undefined);
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const formRef = useRef<HTMLFormElement>(null);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsPending(true);
-    setFormState(null);
+    setFormResult({ status: "submitting" });
+    setFieldErrors(undefined);
 
     const form = formRef.current;
     if (!form) return;
@@ -19,11 +22,16 @@ export default function Form() {
     const formData = new FormData(form);
     const result = await submitForm(formData);
 
-    setFormState(result);
-    setIsPending(false);
-
     if (result.success) {
+      setFormResult({ status: "success" });
+      setSuccessMessage(result.message || "Form submitted successfully!");
       form.reset();
+    } else {
+      setFormResult({
+        status: "error",
+        message: "Validation failed",
+      });
+      setFieldErrors(result.errors);
     }
   }
 
@@ -42,10 +50,10 @@ export default function Form() {
             placeholder="Enter your name"
             className="border border-gray-300 p-2.5 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
-            {/* p1 task deeper */}
-          {formState?.errors?.name && (
+          {/* P1 task deeper */}
+          {fieldErrors?.name && (
             <p className="text-red-500 text-sm mt-1">
-              {formState.errors.name[0]}
+              {fieldErrors.name[0]}
             </p>
           )}
         </div>
@@ -62,10 +70,10 @@ export default function Form() {
             placeholder="example@mail.com"
             className="border border-gray-300 p-2.5 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
-          {/* p1 task deeper */}
-          {formState?.errors?.email && (
+          {/* P1 task deeper */}
+          {fieldErrors?.email && (
             <p className="text-red-500 text-sm mt-1">
-              {formState.errors.email[0]}
+              {fieldErrors.email[0]}
             </p>
           )}
         </div>
@@ -82,27 +90,60 @@ export default function Form() {
             placeholder="e.g. 21"
             className="border border-gray-300 p-2.5 w-full rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
-            {/* p1 task deeper */}
-          {formState?.errors?.age && (
+          {/* P1 task deeper */}
+          {fieldErrors?.age && (
             <p className="text-red-500 text-sm mt-1">
-              {formState.errors.age[0]}
+              {fieldErrors.age[0]}
             </p>
           )}
         </div>
 
-        {/* Submit Button */}
+        {/* Submit Button with P4 spinner */}
         <button
           type="submit"
-          disabled={isPending}
-          className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium px-4 py-2.5 rounded-md transition duration-150 cursor-pointer"
+          disabled={formResult.status === "submitting"}
+          className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium px-4 py-2.5 rounded-md transition duration-150 cursor-pointer flex items-center justify-center gap-2"
         >
-          {isPending ? "Submitting..." : "Submit"}
+          {formResult.status === "submitting" ? (
+            <>
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                />
+              </svg>
+              <span>Submitting...</span>
+            </>
+          ) : (
+            "Submit"
+          )}
         </button>
 
-        {/* Success Message */}
-        {formState?.success && formState.message && (
+        {/* P4 task Error Message */}
+        {formResult.status === "error" && (
+          <div className="p-3 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
+            {formResult.message}
+          </div>
+        )}
+
+        {/* P4 task Success Confirmation */}
+        {formResult.status === "success" && (
           <div className="p-3 bg-green-50 border border-green-200 text-green-700 rounded-md text-sm">
-            {formState.message}
+            {successMessage}
           </div>
         )}
       </form>
