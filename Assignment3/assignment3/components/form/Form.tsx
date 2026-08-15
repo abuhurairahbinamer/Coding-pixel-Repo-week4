@@ -10,7 +10,10 @@ export default function Form() {
   const [fieldErrors, setFieldErrors] = useState<FormState["errors"]>(undefined);
   const [successMessage, setSuccessMessage] = useState<string>("");
   const formRef = useRef<HTMLFormElement>(null);
-
+  // p5 task check
+  console.log("p5 task value : ",process.env.NEXT_PUBLIC_P5_TASK)
+  console.log("p5 task value : ",process.env.P5_TASK)
+  // p5 task check
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormResult({ status: "submitting" });
